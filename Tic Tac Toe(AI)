@@ -1,0 +1,372 @@
+from tkinter import *
+from tkinter import ttk
+from tkinter import messagebox
+from random import randint
+
+# global variable
+ActivePlayer = 1
+ctr = 0
+winner = -1
+p1 = []  # active player one selected
+p2 = []  # active player two selected
+root = Tk()
+root.title("Tic Tac Toe: Player 1")
+style = ttk.Style()
+style.configure('TButton', background='blue', font=('Arial', 25), foreground='white')
+style.configure('Info.TButton', foreground='red', font=('Arial', 18, 'bold'))
+style.map('Info.TButton', background=[('pressed', 'blue'), ('disabled', 'grey')])
+B1 = ttk.Button(root)
+B1.grid(row=0, column=0, sticky='snew', ipadx=40, ipady=40)
+B1.config(command=lambda: BuClick(1))
+B2 = ttk.Button(root)
+B2.grid(row=0, column=1, sticky='snew', ipadx=40, ipady=40)
+B2.config(command=lambda: BuClick(2))
+B3 = ttk.Button(root)
+B3.grid(row=0, column=2, sticky='snew', ipadx=40, ipady=40)
+B3.config(command=lambda: BuClick(3))
+B4 = ttk.Button(root)
+B4.grid(row=1, column=0, sticky='snew', ipadx=40, ipady=40)
+B4.config(command=lambda: BuClick(4))
+B5 = ttk.Button(root)
+B5.grid(row=1, column=1, sticky='snew', ipadx=40, ipady=40)
+B5.config(command=lambda: BuClick(5))
+B6 = ttk.Button(root)
+B6.grid(row=1, column=2, sticky='snew', ipadx=40, ipady=40)
+B6.config(command=lambda: BuClick(6))
+B7 = ttk.Button(root)
+B7.grid(row=2, column=0, sticky='snew', ipadx=40, ipady=40)
+B7.config(command=lambda: BuClick(7))
+B8 = ttk.Button(root)
+B8.grid(row=2, column=1, sticky='snew', ipadx=40, ipady=40)
+B8.config(command=lambda: BuClick(8))
+B9 = ttk.Button(root)
+B9.grid(row=2, column=2, sticky='snew', ipadx=40, ipady=40)
+B9.config(command=lambda: BuClick(9))
+button = ttk.Button(root, text="restart!")
+button.configure(style='Info.TButton')
+button.grid(row=3, column=1, sticky='snew', ipadx=40, ipady=40)
+
+
+def BuClick2():
+    enable()
+    clearall()
+    global winner
+    global ctr
+    global ActivePlayer
+    winner = -1
+    ctr = 0
+    ActivePlayer=1
+    p1.clear()
+    p2.clear()
+
+
+
+button.config(command=BuClick2)
+
+
+def clearall():
+    B1.config(text='')
+    B2.config(text='')
+    B3.config(text='')
+    B4.config(text='')
+    B5.config(text='')
+    B6.config(text='')
+    B7.config(text='')
+    B8.config(text='')
+    B9.config(text='')
+
+
+def enable():
+    B1.config(state='normal')
+    B2.config(state='normal')
+    B3.config(state='normal')
+    B4.config(state='normal')
+    B5.config(state='normal')
+    B6.config(state='normal')
+    B7.config(state='normal')
+    B8.config(state='normal')
+    B9.config(state='normal')
+
+
+# ADDING CROSS OR ZERO
+def BuClick(id):
+    global ActivePlayer
+    global p1
+    global p2
+    global ctr
+    if (ActivePlayer == 1):
+        SetLayout(id, "X")
+        p1.append(id)
+        root.title("Tic Tac Toe: Player 2")
+        ActivePlayer = 2
+        print("P1 :{} ".format(p1))
+        autoplay()
+    else:
+        SetLayout(id, "O")
+        root.title("Tic Tac Toe: Player 1")
+        p2.append(id)
+        ActivePlayer = 1
+        print("P2 :{} ".format(p2))
+    result(p1, p2)
+
+
+def SetLayout(id, PlayerSymbol):
+    global ctr
+    if (id == 1):
+        B1.config(text=PlayerSymbol)
+        B1.state(['disabled'])
+        ctr += 1
+
+    elif (id == 2):
+        B2.config(text=PlayerSymbol)
+        B2.state(['disabled'])
+        ctr += 1
+
+    elif (id == 3):
+        B3.config(text=PlayerSymbol)
+        B3.state(['disabled'])
+        ctr += 1
+
+    elif (id == 4):
+        B4.config(text=PlayerSymbol)
+        B4.state(['disabled'])
+        ctr += 1
+
+    elif (id == 5):
+        B5.config(text=PlayerSymbol)
+        B5.state(['disabled'])
+        ctr += 1
+
+    elif (id == 6):
+        B6.config(text=PlayerSymbol)
+        B6.state(['disabled'])
+        ctr += 1
+
+    elif (id == 7):
+        B7.config(text=PlayerSymbol)
+        B7.state(['disabled'])
+        ctr += 1
+
+    elif (id == 8):
+        B8.config(text=PlayerSymbol)
+        B8.state(['disabled'])
+        ctr += 1
+    elif (id == 9):
+        B9.config(text=PlayerSymbol)
+        B9.state(['disabled'])
+        ctr += 1
+
+
+def disableall():
+    B1.state(['disabled'])
+    B2.state(['disabled'])
+    B3.state(['disabled'])
+    B4.state(['disabled'])
+    B5.state(['disabled'])
+    B6.state(['disabled'])
+    B7.state(['disabled'])
+    B8.state(['disabled'])
+    B9.state(['disabled'])
+
+
+def result(p1, p2):
+    global winner
+    global ctr
+    print(winner)
+    winner = -1
+    if ((1 in p1) and (2 in p1) and (3 in p1)):
+        winner = 1
+
+    elif ((1 in p2) and (2 in p2) and (3 in p2)):
+        winner = 2
+
+    elif ((4 in p1) and (5 in p1) and (6 in p1)):
+        winner = 1
+
+    elif ((4 in p2) and (5 in p2) and (6 in p2)):
+        winner = 2
+
+    elif ((7 in p1) and (8 in p1) and (9 in p1)):
+        winner = 1
+
+
+    elif ((7 in p2) and (8 in p2) and (9 in p2)):
+        winner = 2
+
+
+    elif ((1 in p1) and (4 in p1) and (7 in p1)):
+        winner = 1
+
+    elif ((1 in p2) and (4 in p2) and (7 in p2)):
+        winner = 2
+
+    elif ((2 in p1) and (5 in p1) and (8 in p1)):
+        winner = 1
+
+    elif ((2 in p2) and (5 in p2) and (8 in p2)):
+        winner = 2
+
+    elif ((3 in p1) and (6 in p1) and (9 in p1)):
+        winner = 1
+
+
+    elif ((3 in p2) and (6 in p2) and (9 in p2)):
+        winner = 2
+
+    elif ((1 in p1) and (5 in p1) and (9 in p1)):
+        winner = 1
+
+    elif ((1 in p2) and (5 in p2) and (9 in p2)):
+        winner = 2
+
+
+    elif ((3 in p1) and (5 in p1) and (7 in p1)):
+        winner = 1
+
+    elif ((3 in p2) and (5 in p2) and (7 in p2)):
+        winner = 2
+
+    if (winner == 1):
+        print(winner)
+        messagebox.showinfo(title="congrats", message="player 1 is the winner")
+        BuClick2()
+
+
+    elif (winner == 2):
+        print(winner)
+        messagebox.showinfo(title="congrats", message="player 2 is the winner")
+        BuClick2()
+
+
+def autoplay():
+    try:
+        global p1
+        global p2
+        emptycells = []
+        for cell in range(9):
+            if (not ((cell + 1 in p1) or (cell + 1 in p2))):
+                emptycells.append(cell + 1)
+        RandomIndex = randint(0, len(emptycells) - 1)
+        s = block()
+        d = attack()
+
+        if (d is not None):
+            emptycells.append(d)
+            BuClick(d)
+        elif (s is not None):
+            emptycells.append(s)
+            BuClick(s)
+        else:
+            BuClick(emptycells[RandomIndex])
+    except ValueError:
+        messagebox.showinfo(title="DRAW",message="Better luck next time")
+        BuClick2()
+
+
+def block():
+    global p1
+    global p2
+    if ((1 in p1 and 2 in p1) and not (3 in p2)):
+        return 3
+    elif ((2 in p1 and 3 in p1) and not (1 in p2)):
+        return 1
+    elif ((3 in p1 and 1 in p1) and not (2 in p2)):
+        return 2
+    elif ((4 in p1 and 5 in p1) and not (6 in p2)):
+        return 6
+    elif ((5 in p1 and 6 in p1) and not (4 in p2)):
+        return 4
+    elif ((4 in p1 and 6 in p1) and not (5 in p2)):
+        return 5
+    elif ((7 in p1 and 8 in p1) and not (9 in p2)):
+        return 9
+    elif ((8 in p1 and 9 in p1) and not (7 in p2)):
+        return 7
+    elif ((7 in p1 and 9 in p1) and not (8 in p2)):
+        return 8
+    elif ((1 in p1 and 4 in p1) and not (7 in p2)):
+        return 7
+    elif ((4 in p1 and 7 in p1) and not (1 in p2)):
+        return 1
+    elif ((7 in p1 and 1 in p1) and not (4 in p2)):
+        return 4
+    elif ((2 in p1 and 5 in p1) and not (8 in p2)):
+        return 8
+    elif ((5 in p1 and 8 in p1) and not (2 in p2)):
+        return 2
+    elif ((2 in p1 and 8 in p1) and not (5 in p2)):
+        return 5
+    elif ((3 in p1 and 6 in p1) and not (9 in p2)):
+        return 9
+    elif ((6 in p1 and 9 in p1) and not (3 in p2)):
+        return 3
+    elif ((3 in p1 and 9 in p1) and not (6 in p2)):
+        return 6
+    elif ((1 in p1 and 5 in p1) and not (9 in p2)):
+        return 9
+    elif ((5 in p1 and 9 in p1) and not (1 in p2)):
+        return 1
+    elif ((9 in p1 and 1 in p1) and not (5 in p2)):
+        return 5
+    elif ((3 in p1 and 5 in p1) and not (7 in p2)):
+        return 7
+    elif ((7 in p1 and 5 in p1) and not (3 in p2)):
+        return 3
+    elif ((3 in p1 and 7 in p1) and not (5 in p2)):
+        return 5
+
+
+def attack():
+    global p1
+    global p2
+    if ((1 in p2 and 2 in p2) and not (3 in p1)):
+        return 3
+    elif ((2 in p2 and 3 in p2) and not (1 in p1)):
+        return 1
+    elif ((3 in p2 and 1 in p2) and not (2 in p1)):
+        return 2
+    elif ((4 in p2 and 5 in p2) and not (6 in p1)):
+        return 6
+    elif ((5 in p2 and 6 in p2) and not (4 in p1)):
+        return 4
+    elif ((4 in p2 and 6 in p2) and not (5 in p1)):
+        return 5
+    elif ((7 in p2 and 8 in p2) and not (9 in p1)):
+        return 9
+    elif ((8 in p2 and 9 in p2) and not (7 in p1)):
+        return 7
+    elif ((7 in p2 and 9 in p2) and not (8 in p1)):
+        return 8
+    elif ((1 in p2 and 4 in p2) and not (7 in p1)):
+        return 7
+    elif ((4 in p2 and 7 in p2) and not (1 in p1)):
+        return 1
+    elif ((7 in p2 and 1 in p2) and not (4 in p1)):
+        return 4
+    elif ((2 in p2 and 5 in p2) and not (8 in p1)):
+        return 8
+    elif ((5 in p2 and 8 in p2) and not (2 in p1)):
+        return 2
+    elif ((2 in p2 and 8 in p2) and not (5 in p1)):
+        return 5
+    elif ((3 in p2 and 6 in p2) and not (9 in p1)):
+        return 9
+    elif ((6 in p2 and 9 in p2) and not (3 in p1)):
+        return 3
+    elif ((3 in p2 and 9 in p2) and not (6 in p1)):
+        return 6
+    elif ((1 in p2 and 5 in p2) and not (9 in p1)):
+        return 9
+    elif ((5 in p2 and 9 in p2) and not (1 in p1)):
+        return 1
+    elif ((9 in p2 and 1 in p2) and not (5 in p1)):
+        return 5
+    elif ((3 in p2 and 5 in p2) and not (7 in p1)):
+        return 7
+    elif ((7 in p2 and 5 in p2) and not (3 in p1)):
+        return 3
+    elif ((3 in p2 and 7 in p2) and not (5 in p1)):
+        return 5
+
+
+root.mainloop()
